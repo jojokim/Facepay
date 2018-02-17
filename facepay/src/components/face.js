@@ -149,7 +149,7 @@ export default class Face extends Component {
             width={500}
           />
           <br/>
-          <button onClick={this.automatedProcess}>Magic Button</button>
+          <button onClick={this.captureAndProcess}>Magic Button</button>
         </div>
 
         <br/><br/>
