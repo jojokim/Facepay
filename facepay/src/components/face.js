@@ -2,23 +2,12 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import Webcam from 'react-webcam';
 
-import QuestionGenerator from './QuestionGenerator'
-
 export default class Face extends Component {
 
   constructor () {
     super();
     this.state = {value: ''};
-    this.emotion = [];
-    this.emotion[0] = 0;
-    this.emotion[1] = 0;
-    this.emotion[2] = 0;
-    this.emotion[3] = 0;
-    this.emotion[4] = 0;
-    this.emotion[5] = 0;
-    this.emotion[6] = 0;
-    this.emotion[7] = 0;
-    this.emoValue = 0;
+    this.value = 0;
   }
 
 
@@ -106,22 +95,12 @@ export default class Face extends Component {
                 $("#responseTextArea").val(JSON.stringify(data, null, 2));
                 console.log(JSON.stringify(data, null, 2));
                 if (data[0] != null) {
-                    this.emotion[0] += data[0].faceAttributes.emotion.anger;
-                    this.emotion[1] += data[0].faceAttributes.emotion.contempt;
-                    this.emotion[2] += data[0].faceAttributes.emotion.disgust;
-                    this.emotion[3] += data[0].faceAttributes.emotion.fear;
-                    this.emotion[4] += data[0].faceAttributes.emotion.happiness;
-                    this.emotion[5] += data[0].faceAttributes.emotion.neutral;
-                    this.emotion[6] += data[0].faceAttributes.emotion.sadness;
-                    this.emotion[7] += data[0].faceAttributes.emotion.surprise;
                     console.log(this.emotion);
                 }
             })
 
             .fail(function(jqXHR, textStatus, errorThrown) {
                 // Display error message.
-
-
                 var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
                 errorString += (jqXHR.responseText === "") ? "" : (JSON.parse(jqXHR.responseText)) ?
                     JSON.parse(jqXHR.responseText).message : JSON.parse(jqXHR.responseText).error.message;
@@ -131,7 +110,6 @@ export default class Face extends Component {
         };
 
       regen = () => {
-        this.emotion = [0,0,0,0,0,0,0,0];
         this.setState({value: this.value +1});
         document.getElementById("response").innerHTML = "";
         document.getElementById("answerInput").value = "";
@@ -167,16 +145,9 @@ export default class Face extends Component {
 
     return (
       <div>
-        <QuestionGenerator difficulty={this.emoValue}/>
         <div style={styles.font}>
           <button className ="btn btn-primary my-2 my-sm-0" type="submit" onClick={this.regen} >Next Question</button>
         </div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
         <br/>
         <br/>
         <div>
