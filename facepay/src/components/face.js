@@ -89,15 +89,16 @@ export default class Face extends Component {
       }
       if (data[0] == null)
         this.setState({hello:"Come Close!"});
-      else
-        this.identify(data[0].faceId);
+      else {
+          this.identify(data[0].faceId);
+      }
     });
 
   };
 
   identify = (fid) => {
     var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
-    console.log(fid);
+    console.log(fid +"is the fid");
     fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/identify', {
       method: 'POST',
       headers: header,
