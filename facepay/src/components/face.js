@@ -109,11 +109,6 @@ export default class Face extends Component {
             });
         };
 
-      regen = () => {
-        this.setState({value: this.value +1});
-        document.getElementById("response").innerHTML = "";
-        document.getElementById("answerInput").value = "";
-      }
 
       emoCheck = () => {
         let emocheckVal = 0;
@@ -133,7 +128,7 @@ export default class Face extends Component {
       }
 
   render() {
-    this.autoprogo();
+    /* this.autoprogo();  */
     const styles = {
       font: {
         textAlign: 'center',
@@ -145,11 +140,6 @@ export default class Face extends Component {
 
     return (
       <div>
-        <div style={styles.font}>
-          <button className ="btn btn-primary my-2 my-sm-0" type="submit" onClick={this.regen} >Next Question</button>
-        </div>
-        <br/>
-        <br/>
         <div>
           <Webcam
             audio={false}
