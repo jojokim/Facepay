@@ -83,9 +83,7 @@ export default class Face extends Component {
                   xhrObj.setRequestHeader("Content-Type","application/octet-stream");
                   xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
                 },
-
                 type: "POST",
-
                 // Request body.
                 data: blob,
             })
@@ -97,7 +95,7 @@ export default class Face extends Component {
                 if (data[0] != null) {
                     console.log(this.emotion);
                 }
-                //this part is where you process things
+                //this part is where you process things all the function call goes here
                 faceCompare(data);
             })
 
