@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import Webcam from 'react-webcam';
 
-
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
 let db;
-
+// Create a root reference
+var storageRef = firebase.storage().ref();
 var subscriptionKey = "cb2e4566d1ac4bdea478b4a3e9ec7256";
 
 export default class Face extends Component {
@@ -39,13 +39,17 @@ export default class Face extends Component {
   captureAndProcess = () => {
     let imageSrc = this.webcam.getScreenshot();
     imageSrc = imageSrc.substr(23);
-    const imgBlob = this.b64toBlob(imageSrc, "image/jpeg", 2048);
+    const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
     this.detect(imgBlob);
+    // ref.put(imgBlob).then(snapshot => {
+    //   console.log('Uploaded a blob or file!');
+    //   window.s = snapshot;
+    // }
   };
 
   b64toBlob(b64Data, contentType, sliceSize) {
     contentType = contentType || '';
-    sliceSize = sliceSize || 2048;
+    sliceSize = sliceSize || 256;
     var byteCharacters = atob(b64Data);
     var byteArrays = [];
     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -59,6 +63,7 @@ export default class Face extends Component {
     }
     var blob = new Blob(byteArrays, {type: contentType});
     return blob;
+
   }
 
   detect = (blob) => {
