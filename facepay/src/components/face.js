@@ -87,8 +87,8 @@ export default class Face extends Component {
       if (data.length > 1) {
         // calculate the square size for each array, and the return the faceId of the largest rectangle //
       }
-      if (data[0].faceId == null)
-        this.setState({hello:"Come Close!"});
+      if (data[0] == null)
+        this.setState({hello:"Analyzing"});
       else {
           this.identify(data[0].faceId);
       }
