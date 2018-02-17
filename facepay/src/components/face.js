@@ -72,10 +72,12 @@ export default class Face extends Component {
     fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/detect?' + params, {
       method: 'POST',
       headers: header,
-      body: JSON.stringify({
+      body: {
         data: blob,
-        //url: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg"
-      })
+      }
+      // body: JSON.stringify({
+      //   url: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg"
+      // })
     }).then((res) => {
       return res.json();
     }).then(data => {
