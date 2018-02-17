@@ -133,26 +133,26 @@ export default class Face extends Component {
       }).then(res=> {
         var persistedId = res.persistedFaceIds[0];
         window.res = res;
-        this.bringPersonInfo(persistedId);
+        this.bringPersonInfo(res.userData);
       }).catch(function(err) {
           console.log(err);
       });
     }
 
-    bringPersonInfo = (pid) => {
-      var ref = db.collection("users").where("pid", "==", pid).limit(1);
-      ref.get().then(querySnapshot => {
-        console.log("got it pid " + pid);
-        querySnapshot.forEach(doc => {
-            console.log(doc.id, " => ", doc.data());
-            this.setState({hello : "Hi, " + doc.data().first + "!",})
-            window.doc = doc.data();
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-  }
+    bringPersonInfo = (docId) => {
+      var docRef = db.collection("users").doc(docId);
+      docRef.get().then(doc => {
+          if (doc.exists) {
+              console.log("Document data:", doc.data());
+              this.setState({hello : "Hi, " + doc.data().first + "!",})
+          } else {
+              console.log("Not on the system!");
+          }
+      }).catch(function(error) {
+          console.log("Error getting Data:", error);
+      });
+
+    }
 
   faceCompare = (data) => {
     var width = data[0].faceRectangle["width"];
