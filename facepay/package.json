@@ -8,6 +8,7 @@
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-google-charts": "^1.5.5",
     "react-scripts": "1.1.1",
     "react-webcam": "^0.2.0"
   },
