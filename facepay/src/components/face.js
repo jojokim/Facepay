@@ -40,10 +40,6 @@ export default class Face extends Component {
     imageSrc = imageSrc.substr(23);
     const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
     this.detect(imgBlob);
-    // ref.put(imgBlob).then(snapshot => {
-    //   console.log('Uploaded a blob or file!');
-    //   window.s = snapshot;
-    // }
   };
 
   b64toBlob(b64Data, contentType, sliceSize) {
@@ -62,7 +58,6 @@ export default class Face extends Component {
     }
     var blob = new Blob(byteArrays, {type: contentType});
     return blob;
-
   }
 
   detect = (blob) => {
@@ -77,15 +72,13 @@ export default class Face extends Component {
       method: 'POST',
       headers: header,
       body: blob,
-      // body: JSON.stringify({
-      //   url: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg"
-      // })
     }).then((res) => {
       return res.json();
     }).then(data => {
       window.data = data;
       if (data.length > 1) {
         // calculate the square size for each array, and the return the faceId of the largest rectangle //
+      
       }
       if (data[0].faceId == null)
         this.setState({hello:"Come Close!"});
@@ -95,6 +88,13 @@ export default class Face extends Component {
     });
 
   };
+
+  faceCompare = (data) => {
+    var width = data.faceRectangle["width"];
+    var height = data.faceRectangle["height"];
+    var size = width * height;
+    return size;
+  }
 
   identify = (fid) => {
     var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
@@ -154,12 +154,6 @@ export default class Face extends Component {
 
     }
 
-  faceCompare = (data) => {
-    var width = data[0].faceRectangle["width"];
-    var height = data[0].faceRectangle["height"];
-    var size = width * height;
-    return size;
-  }
 
   render() {
     /* this.autoprogo();  */
