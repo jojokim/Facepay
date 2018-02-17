@@ -59,7 +59,7 @@ export default class Face extends Component {
 
     processImage(blob) {
             var subscriptionKey = "cb2e4566d1ac4bdea478b4a3e9ec7256";
-            var uriBase = "https://westus.api.cognitive.microsoft.com/face/v1.0/detect";
+            var uriBase = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect";
 
             // Request parameters.
             var params = {
