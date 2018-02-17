@@ -1,20 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {lightGreen500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import * as firebase from 'firebase';
+import firestore from 'firebase/firestore'
 
 var config = {
-   apiKey: "AIzaSyDXC_ba_hzVZrlZg1ly3nzgL9hlGNJlaxc",
-       authDomain: "airy-charmer-164016.firebaseapp.com",
-       databaseURL: "https://airy-charmer-164016.firebaseio.com",
-       projectId: "airy-charmer-164016",
-       storageBucket: "airy-charmer-164016.appspot.com",
-       messagingSenderId: "359173267747"
+   apiKey: 'AIzaSyDXC_ba_hzVZrlZg1ly3nzgL9hlGNJlaxc',
+   authDomain: 'airy-charmer-164016.firebaseapp.com',
+   databaseURL: 'https://airy-charmer-164016.firebaseio.com',
+   projectId: 'airy-charmer-164016',
+   storageBucket: 'airy-charmer-164016.appspot.com',
+   messagingSenderId: '359173267747',
 };
 
 firebase.initializeApp(config);
 firebase.firestore().enablePersistence();
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: "#99cda9",
+  },
+});
+
+const MuiApp = () => (
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <App/>
+  </MuiThemeProvider>
+);
+
+
+ReactDOM.render(<MuiApp/>, document.getElementById('root'));
