@@ -48,9 +48,11 @@ export default class Group extends Component {
           'Content-Type': 'application/json',
           'Ocp-Apim-Subscription-Key': subscriptionKey,
         }
-      }).then(function() {
-        console.log("ok");
+      }).then(function(data) {
+        return data.json();
 
+    }).then(res=> {
+      window.res = res;
     }).catch(function() {
         console.log("error");
     });
@@ -58,9 +60,9 @@ export default class Group extends Component {
 
   addPerson(firstIn, lastIn, imgUrl) {
     let User = {
-      first: "Someone",
-      last: "Person",
-      img: "https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/18813881_1323154691133471_2162425183642652951_n.jpg?oh=ffc98a87253b8ab0ab22d2e557107931&oe=5B0546D1",
+      first: "Joseph",
+      last: "Kim",
+      img: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg",
       pid: " ",
     };
     db.collection('users').add(User).then(function(docRef) {
@@ -100,6 +102,41 @@ export default class Group extends Component {
     });
   }
 
+  trainStatus() {
+    // Request parameters.
+    var params = {"personGroupId":"hophacks"};
+    // Perform the REST API call.
+      fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/persongroups/hophacks/training?' + $.param(params), {
+        method: 'GET',
+        headers: {
+          'Ocp-Apim-Subscription-Key': subscriptionKey,
+        }
+      }).then(function() {
+        console.log("success");
+
+    }).catch(function() {
+        console.log("error");
+    });
+  }
+
+  trainGroup() {
+    // Request parameters.
+    var params = {"personGroupId":"hophacks"};
+    // Perform the REST API call.
+      fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/persongroups/hophacks/train?' + $.param(params), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Ocp-Apim-Subscription-Key': subscriptionKey,
+        }
+      }).then(function() {
+        console.log("train success");
+
+    }).catch(function() {
+        console.log("train error");
+    });
+  }
+
   onSubmit() {
     return () => {
 
@@ -116,6 +153,8 @@ export default class Group extends Component {
           <input className="formControl" type="text" placeholder="Last Name"/>
           <input className="formControl" type="text" placeholder="Img Url"/>
           <button onClick={this.addPerson}>Add</button>
+          <button onClick={this.trainStatus}>Train Check</button>
+          <button onClick={this.trainGroup}>Train Group</button>
         </div>
       </div>
     );
