@@ -132,6 +132,7 @@ export default class Face extends Component {
           return data.json();
       }).then(res=> {
         var persistedId = res.persistedFaceIds[0];
+        window.res = res;
         this.bringPersonInfo(persistedId);
       }).catch(function(err) {
           console.log(err);
@@ -151,41 +152,6 @@ export default class Face extends Component {
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-    }
-
-  processImage(blob) {
-    var uriBase = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect";
-
-    // Request parameters.
-    var params = {
-      "returnFaceId": "true",
-      "returnFaceLandmarks": "false",
-    };
-
-    // Perform the REST API call.
-    var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
-      $.ajax({
-        url: uriBase + "?" + $.param(params),
-        contentType: false,
-        processData: false,
-        // Request headers.
-        beforeSend: function(xhrObj){
-        //xhrObj.setRequestHeader("Content-Type","application/json");
-        },
-        type: "POST",
-        // Request body.
-        data: blob,
-      })
-      .done((data) => {
-        // Show formatted JSON on webpage.
-        $("#responseTextArea").val(JSON.stringify(data, null, 2));
-        //console.log(JSON.stringify(data, null, 2));
-        if (data[0] != null) {
-          console.log(this.emotion);
-        }
-        //this part is where you process things all the function call goes here
-        this.faceCompare(data);
-      });
   }
 
   faceCompare = (data) => {
@@ -194,8 +160,6 @@ export default class Face extends Component {
     var size = width * height;
     return size;
   }
-
-
 
   render() {
     /* this.autoprogo();  */
