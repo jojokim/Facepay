@@ -40,7 +40,7 @@ export default class Face extends Component {
     let imageSrc = this.webcam.getScreenshot();
     imageSrc = imageSrc.substr(23);
     const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
-    this.processImage(imgBlob);
+    this.detect(imgBlob);
   };
 
   b64toBlob(b64Data, contentType, sliceSize) {
@@ -61,9 +61,9 @@ export default class Face extends Component {
     return blob;
   }
 
-  detect = () => {
-    //var header = {  'Content-Type': 'application/octet-stream','Ocp-Apim-Subscription-Key': subscriptionKey,  };
-    var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
+  detect = (blob) => {
+    var header = {  'Content-Type': 'application/octet-stream','Ocp-Apim-Subscription-Key': subscriptionKey,  };
+    //var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
     // Request parameters.
     var params = {
       "returnFaceId": "true",
@@ -73,8 +73,8 @@ export default class Face extends Component {
       method: 'POST',
       headers: header,
       body: JSON.stringify({
-        //data: blob,
-        url: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg"
+        data: blob,
+        //url: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg"
       })
     }).then((res) => {
       return res.json();
