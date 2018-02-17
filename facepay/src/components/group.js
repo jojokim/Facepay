@@ -56,7 +56,7 @@ export default class Group extends Component {
     });
   }
 
-  addPerson(nameIn, imgUrl) {
+  addPerson(firstIn, lastIn, imgUrl) {
     let User = {
       first: "Someone",
       last: "Person",
@@ -98,6 +98,12 @@ export default class Group extends Component {
               });
       });
     });
+  }
+
+  onSubmit() {
+    return () => {
+
+    }
   }
 
   render() {

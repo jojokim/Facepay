@@ -95,12 +95,10 @@ export default class Face extends Component {
   }
 
   faceCompare = (data) => {
-    console.log(data);
-    window.data = data;
-
-    int width = data[0].faceRectangle["width"];
-    int height = data[0].faceRectangle["height"];
-    int size = width * height;
+    var width = data[0].faceRectangle["width"];
+    var height = data[0].faceRectangle["height"];
+    var size = width * height;
+    return size;
   }
 
   render() {
