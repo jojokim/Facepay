@@ -58,7 +58,6 @@ export default class Face extends Component {
     var params = {
       "returnFaceId": "false",
       "returnFaceLandmarks": "false",
-      "returnFaceAttributes": "emotion",
     };
 
     // Perform the REST API call.
