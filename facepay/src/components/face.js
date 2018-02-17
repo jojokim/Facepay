@@ -6,7 +6,6 @@ import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
 let db;
 // Create a root reference
-var storageRef = firebase.storage().ref();
 var subscriptionKey = "cb2e4566d1ac4bdea478b4a3e9ec7256";
 
 export default class Face extends Component {
@@ -77,9 +76,7 @@ export default class Face extends Component {
     fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/detect?' + params, {
       method: 'POST',
       headers: header,
-      body: {
-        data: blob,
-      }
+      body: blob,
       // body: JSON.stringify({
       //   url: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg"
       // })
