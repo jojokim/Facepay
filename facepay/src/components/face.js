@@ -2,14 +2,25 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import Webcam from 'react-webcam';
 
+
+import * as firebase from 'firebase';
+import firestore from 'firebase/firestore';
+let db;
+
+var subscriptionKey = "cb2e4566d1ac4bdea478b4a3e9ec7256";
+
 export default class Face extends Component {
 
   constructor () {
     super();
-    this.state = {value: ''};
-    this.value = 0;
+    this.state = {
+      pid : "",
+    };
   }
 
+  componentWillMount() {
+    db = firebase.firestore();
+  }
 
   setRef = (webcam) => {
     this.webcam = webcam;
@@ -50,17 +61,100 @@ export default class Face extends Component {
     return blob;
   }
 
+  detect = () => {
+    //var header = {  'Content-Type': 'application/octet-stream','Ocp-Apim-Subscription-Key': subscriptionKey,  };
+    var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
+    // Request parameters.
+    var params = {
+      "returnFaceId": "true",
+      "returnFaceLandmarks": "false",
+    };
+    fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/detect?' + params, {
+      method: 'POST',
+      headers: header,
+      body: JSON.stringify({
+        //data: blob,
+        url: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg"
+      })
+    }).then((res) => {
+      return res.json();
+    }).then(data => {
+      if (data.length > 1) {
+        // calculate the square size for each array, and the return the faceId of the largest rectangle //
+      }
+      this.identify(data[0].faceId);
+    });
+
+  };
+
+  identify = (fid) => {
+    var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
+    console.log(fid);
+    fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/identify', {
+      method: 'POST',
+      headers: header,
+      body: JSON.stringify({
+        faceIds:[fid],
+        personGroupId:"hophacks",
+        maxNumOfCandidatesReturned: "1",
+      })
+    }).then(data => {
+      return data.json();
+    }).then(result => {
+      if (result[0].candidates[0])
+        this.getPersistedId(result[0].candidates[0].personId);
+    }).catch(err => {
+      console.log(err);
+    });
+
+  }
+
+    getPersistedId = (personId) => {
+      // Request parameters.
+      var params = {"personGroupId":"hophacks", "personId":personId};
+      // Perform the REST API call.
+        fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/persongroups/hophacks/persons/'+ personId+'?' + $.param(params), {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': subscriptionKey,
+          }
+        }).then(function(data) {
+          return data.json();
+      }).then(res=> {
+        var persistedId = res.persistedFaceIds[0];
+        this.bringPersonInfo(persistedId);
+      }).catch(function(err) {
+          console.log(err);
+      });
+    }
+
+    bringPersonInfo = (pid) => {
+      var ref = db.collection("users").where("pid", "==", pid).limit(1);
+      ref.get().then(querySnapshot => {
+        console.log("got it pid " + pid);
+        querySnapshot.forEach(doc => {
+            console.log(doc.id, " => ", doc.data());
+            this.setState({hello : "Hi, " + doc.data().first + "!",})
+            window.doc = doc.data();
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    }
+
   processImage(blob) {
-    var subscriptionKey = "cb2e4566d1ac4bdea478b4a3e9ec7256";
     var uriBase = "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect";
 
     // Request parameters.
     var params = {
-      "returnFaceId": "false",
+      "returnFaceId": "true",
       "returnFaceLandmarks": "false",
     };
 
     // Perform the REST API call.
+    var header = {  'Content-Type': 'application/json','Ocp-Apim-Subscription-Key': subscriptionKey,  };
       $.ajax({
         url: uriBase + "?" + $.param(params),
         contentType: false,
@@ -68,8 +162,6 @@ export default class Face extends Component {
         // Request headers.
         beforeSend: function(xhrObj){
         //xhrObj.setRequestHeader("Content-Type","application/json");
-        xhrObj.setRequestHeader("Content-Type","application/octet-stream");
-        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
         },
         type: "POST",
         // Request body.
@@ -84,13 +176,6 @@ export default class Face extends Component {
         }
         //this part is where you process things all the function call goes here
         this.faceCompare(data);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        // Display error message.
-        var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-        errorString += (jqXHR.responseText === "") ? "" : (JSON.parse(jqXHR.responseText)) ?
-        JSON.parse(jqXHR.responseText).message : JSON.parse(jqXHR.responseText).error.message;
-        alert(errorString);
       });
   }
 
@@ -100,6 +185,8 @@ export default class Face extends Component {
     var size = width * height;
     return size;
   }
+
+
 
   render() {
     /* this.autoprogo();  */
@@ -115,6 +202,9 @@ export default class Face extends Component {
     return (
       <div>
         <div>
+        <h1>{this.state.name}</h1>
+        <h1>{this.state.hello}</h1>
+        <h2>{this.state.info}</h2>
           <Webcam
             audio={false}
             height={500}
@@ -123,9 +213,8 @@ export default class Face extends Component {
             width={500}
           />
           <br/>
-          <button onClick={this.captureAndProcess}>Magic Button</button>
+          <button onClick={this.detect}>Magic Button</button>
         </div>
-
         <br/><br/>
         <div id="wrapper" style={this.outputStyle}>
             <div id="jsonOutput" style={this.imageStyle}>

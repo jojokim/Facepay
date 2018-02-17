@@ -13,8 +13,8 @@ class App extends Component {
       <div className="App">
         <AppBar title="FacePay"/>
         <Group/>
-        <Chart/>
         <Face/>
+        <Chart/>
       </div>
     );
   }
