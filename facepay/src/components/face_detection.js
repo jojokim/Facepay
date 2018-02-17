@@ -9,6 +9,7 @@ function total_sum (int num) {
 
 function average (int num) {
 	if (0 <= num && num <= 1) {
-		average = (average * count + num) / count + 1;
+		average = (average * count + num) / (count + 1);
 	}
+	count++;
 }
