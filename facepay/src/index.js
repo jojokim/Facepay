@@ -8,6 +8,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore'
+import registerServiceWorker from './registerServiceWorker';
 
 var config = {
    apiKey: 'AIzaSyDXC_ba_hzVZrlZg1ly3nzgL9hlGNJlaxc',
@@ -33,5 +34,5 @@ const MuiApp = () => (
   </MuiThemeProvider>
 );
 
-
 ReactDOM.render(<MuiApp/>, document.getElementById('root'));
+registerServiceWorker();

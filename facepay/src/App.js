@@ -7,9 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <AppBar
-            title="FacePay"
-          />
+        <AppBar title="FacePay"/>
       </div>
     );
   }
