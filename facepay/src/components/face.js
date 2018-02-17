@@ -39,13 +39,13 @@ export default class Face extends Component {
   captureAndProcess = () => {
     let imageSrc = this.webcam.getScreenshot();
     imageSrc = imageSrc.substr(23);
-    const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
+    const imgBlob = this.b64toBlob(imageSrc, "image/jpeg", 2048);
     this.detect(imgBlob);
   };
 
   b64toBlob(b64Data, contentType, sliceSize) {
     contentType = contentType || '';
-    sliceSize = sliceSize || 512;
+    sliceSize = sliceSize || 2048;
     var byteCharacters = atob(b64Data);
     var byteArrays = [];
     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -81,10 +81,11 @@ export default class Face extends Component {
     }).then((res) => {
       return res.json();
     }).then(data => {
+      window.data = data;
       if (data.length > 1) {
         // calculate the square size for each array, and the return the faceId of the largest rectangle //
       }
-      if (data[0] == null) 
+      if (data[0] == null)
         this.setState({hello:"Come Close!"});
       else
         this.identify(data[0].faceId);
@@ -218,7 +219,7 @@ export default class Face extends Component {
             width={500}
           />
           <br/>
-          <button onClick={this.detect}>Magic Button</button>
+          <button onClick={this.captureAndProcess}>Magic Button</button>
         </div>
         <br/><br/>
         <div id="wrapper" style={this.outputStyle}>
