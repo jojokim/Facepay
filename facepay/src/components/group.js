@@ -56,7 +56,7 @@ export default class Group extends Component {
     });
   }
 
-  addPerson(nameIn) {
+  addPerson(nameIn, imgUrl) {
     let User = {
       first: "Someone",
       last: "Person",
@@ -105,8 +105,12 @@ export default class Group extends Component {
       <div>
         <button onClick={this.createGroup}>Create Face List</button>
         <button onClick={this.getGroup}>Get Group</button>
-        <input className="form-control" type="text" placeholder="Type Name"/>
-        <button onClick={this.addPerson}>Add a Person</button>
+        <div className ="forms">
+          <input className="formControl" type="text" placeholder="First Name"/>
+          <input className="formControl" type="text" placeholder="Last Name"/>
+          <input className="formControl" type="text" placeholder="Img Url"/>
+          <button onClick={this.addPerson}>Add</button>
+        </div>
       </div>
     );
   }
