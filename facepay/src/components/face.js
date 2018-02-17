@@ -84,7 +84,7 @@ export default class Face extends Component {
           console.log(this.emotion);
         }
         //this part is where you process things all the function call goes here
-        faceCompare(data);
+        this.faceCompare(data);
       })
       .fail(function(jqXHR, textStatus, errorThrown) {
         // Display error message.
