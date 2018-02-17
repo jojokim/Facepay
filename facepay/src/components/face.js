@@ -112,24 +112,7 @@ export default class Face extends Component {
         };
 
       faceCompare = (data) => {
-        
-      }
 
-      emoCheck = () => {
-        let emocheckVal = 0;
-        let sad = this.emotion[0]+this.emotion[1]+this.emotion[2]+this.emotion[3]+this.emotion[6]+this.emotion[7];
-        if (sad > 3 && this.emotion[4] > 3 && sad > this.emotion[4])
-          emocheckVal = -1;
-        else if (sad > 3 && this.emotion[4] > 3 && sad < this.emotion[4])
-          emocheckVal = 1;
-
-        if (this.emotion[4]/5 > 0.4)
-          emocheckVal = 1;
-        if (sad/5 > 0.1)
-          emocheckVal = -1;
-
-        console.log("emoval is "+emocheckVal);
-        return emocheckVal;
       }
 
   render() {
