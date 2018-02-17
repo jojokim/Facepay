@@ -139,7 +139,7 @@ export default class Face extends Component {
     }
 
     bringPersonInfo = (pid) => {
-      var ref = db.collection("users").where("pid", "==", pid).limit(1);
+      var ref = db.collection("users").where("pid", "==", "b65c622e-5f95-499f-9552-45b2cc713172").limit(1);
       ref.get().then(querySnapshot => {
         console.log("got it pid " + pid);
         querySnapshot.forEach(doc => {
