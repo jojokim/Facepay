@@ -97,6 +97,8 @@ export default class Face extends Component {
                 if (data[0] != null) {
                     console.log(this.emotion);
                 }
+                //this part is where you process things
+                faceCompare(data);
             })
 
             .fail(function(jqXHR, textStatus, errorThrown) {
@@ -109,6 +111,9 @@ export default class Face extends Component {
             });
         };
 
+      faceCompare = (data) => {
+        
+      }
 
       emoCheck = () => {
         let emocheckVal = 0;
