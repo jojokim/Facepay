@@ -15,14 +15,14 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      imgurl : [""];
+      imgurl : "";
     }
   }
 
   ender() {
     return (
       <div className="App">
-        <img src="" alt=""/>
+        <img src={this.state.imgurl} alt=""/>
         <Group/>
         <Face/>
         <Chart/>
