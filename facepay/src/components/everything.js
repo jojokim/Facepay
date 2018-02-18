@@ -292,7 +292,7 @@ class App extends Component {
         img: this.state.imgurl,
         pid: " ",
       };
-      if (url != null) {
+      if (url) {
         let User = {
           first: this.state.first,
           last: this.state.last,
@@ -300,7 +300,7 @@ class App extends Component {
           pid: " ",
         };
       }
-
+      console.log("still the url is "+url);
       db.collection('users').add(User).then(function(docRef) {
           console.log('Added with docID : ' + docRef.id);
           // Request parameters.
