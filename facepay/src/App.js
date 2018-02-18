@@ -12,13 +12,14 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      imgurl : "",
+      imgurl : "./imgs/",
     }
   }
 
   render() {
     return (
       <div className="App">
+        <img src={this.state.imgurl} alt=""/>
         <Group/>
         <Face/>
         <Chart/>
