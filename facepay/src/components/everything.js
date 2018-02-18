@@ -97,9 +97,9 @@ class App extends Component {
         downloadURL = uploadTask.snapshot.downloadURL;
       });
 
-      this.setState({imgurl:downloadURL});
-
-      this.addPerson();
+      this.setState({imgurl:downloadURL}).then(() => {
+        this.addPerson();
+      });
     }
 
     captureAndProcess = () => {
