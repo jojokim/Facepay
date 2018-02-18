@@ -95,11 +95,10 @@ class App extends Component {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         downloadURL = uploadTask.snapshot.downloadURL;
+        this.setState({imgurl:downloadURL});
       });
 
-      this.setState({imgurl:downloadURL}).then(() => {
-        this.addPerson();
-      });
+      this.addPerson();
     }
 
     captureAndProcess = () => {
