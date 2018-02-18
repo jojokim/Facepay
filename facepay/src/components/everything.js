@@ -73,7 +73,7 @@ class App extends Component {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < 8; i++)
           text += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
@@ -108,7 +108,6 @@ class App extends Component {
         downloadURL = uploadTask.snapshot.downloadURL;
         console.log(downloadURL);
       });
-
 
       this.addPerson(downloadURL);
     }
@@ -286,7 +285,7 @@ class App extends Component {
       });
     }
 
-    addPerson(url) {
+    addPerson = (url) => {
       let User = {
         first: this.state.first,
         last: this.state.last,
