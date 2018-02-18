@@ -29,6 +29,7 @@ class App extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.addPerson = this.addPerson.bind(this);
+    this.captureAndAdd = this.captureAndAdd.bind(this);
   }
 
   handleInputChange(event) {
