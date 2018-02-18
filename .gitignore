@@ -59,3 +59,5 @@ typings/
 
 facepay/package.json
 facepay/package-lock.json
+facepay/package.json
+*.json
