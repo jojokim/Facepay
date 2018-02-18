@@ -68,6 +68,9 @@ export default class Face extends Component {
       "returnFaceId": "true",
       "returnFaceLandmarks": "false",
     };
+    // variables used for finding the largest rectangle later
+    var index = 0;
+    var max_size = 0;
     fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/detect?' + params, {
       method: 'POST',
       headers: header,
@@ -77,21 +80,26 @@ export default class Face extends Component {
     }).then(data => {
       window.data = data;
       if (data.length > 1) {
-        // calculate the square size for each array, and the return the faceId of the largest rectangle //
-      
+        // calculate the square size for each array, and the return the faceId of the largest rectangle 
+        for (let i = 0; i < data.length; i++) {
+           if (max_size < this.size_of_rectangle(data[i])) {
+            max_size = this.size_of_rectangle(data[i]);
+            index = i;
+           }
+        }
       }
       if (data[0] == null)
         this.setState({hello:"Analyzing"});
       else {
-          this.identify(data[0].faceId);
+        this.identify(data[index].faceId);
       }
     });
 
   };
 
-  faceCompare = (data) => {
-    var width = data.faceRectangle["width"];
-    var height = data.faceRectangle["height"];
+  size_of_rectangle = (d) => {
+    var width = d.faceRectangle["width"];
+    var height = d.faceRectangle["height"];
     var size = width * height;
     return size;
   }
