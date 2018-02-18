@@ -4,9 +4,6 @@ import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
 import styles from './App.css';
 
-import img1 from './imgs/plink4.png';
-import img2 from './imgs/blink2.png';
-
 import Face from './components/face';
 import Chart from './components/chart';
 import Group from './components/group';
@@ -15,13 +12,16 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+<<<<<<< HEAD
+=======
+      imgurl : "",
+>>>>>>> 85a5b4750079dc8e704220429c90b1e323bb1372
     }
   }
 
-  ender() {
+  render() {
     return (
       <div className="App">
-        <img src="" alt=""/>
         <Group/>
         <Face/>
         <Chart/>
