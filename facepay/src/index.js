@@ -24,7 +24,7 @@ firebase.firestore().enablePersistence();
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: "#f28499",
+    primary1Color: "#99cda9",
   },
 });
 
