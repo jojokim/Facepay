@@ -79,7 +79,6 @@ export default class Face extends Component {
     }).then(data => {
       window.data = data;
       if (data.length > 1) {
-<<<<<<< HEAD
         // calculate the square size for each array, and the return the faceId of the largest rectangle 
         for (let i = 0; i < data.length; i++) {
            if (max_size < this.size_of_rectangle(data[i])) {
@@ -87,10 +86,6 @@ export default class Face extends Component {
             index = i;
            }
         }
-=======
-        // calculate the square size for each array, and the return the faceId of the largest rectangle //
-
->>>>>>> 33d5da7aa48c0e9cd6af879bfd06e79b9156891c
       }
       if (data[0] == null)
         this.setState({hello:"Analyzing"});
@@ -133,42 +128,40 @@ export default class Face extends Component {
 
   }
 
-    getPersistedId = (personId) => {
-      // Request parameters.
-      var params = {"personGroupId":"hophacks", "personId":personId};
-      // Perform the REST API call.
-        fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/persongroups/hophacks/persons/'+ personId+'?' + $.param(params), {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key': subscriptionKey,
-          }
-        }).then(function(data) {
-          return data.json();
-      }).then(res=> {
-        var persistedId = res.persistedFaceIds[0];
-        window.res = res;
-        this.bringPersonInfo(res.userData);
-      }).catch(function(err) {
-          console.log(err);
-      });
-    }
+  getPersistedId = (personId) => {
+    // Request parameters.
+    var params = {"personGroupId":"hophacks", "personId":personId};
+    // Perform the REST API call.
+      fetch('https://eastus.api.cognitive.microsoft.com/face/v1.0/persongroups/hophacks/persons/'+ personId+'?' + $.param(params), {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Ocp-Apim-Subscription-Key': subscriptionKey,
+        }
+      }).then(function(data) {
+        return data.json();
+    }).then(res=> {
+      var persistedId = res.persistedFaceIds[0];
+      window.res = res;
+      this.bringPersonInfo(res.userData);
+    }).catch(function(err) {
+        console.log(err);
+    });
+  }
 
-    bringPersonInfo = (docId) => {
-      var docRef = db.collection("users").doc(docId);
-      docRef.get().then(doc => {
-          if (doc.exists) {
-              console.log("Document data:", doc.data());
-              this.setState({conf:this.state.conf, hello : "Hi, " + doc.data().first + "!",})
-          } else {
-              console.log("Not on the system!");
-          }
-      }).catch(function(error) {
-          console.log("Error getting Data:", error);
-      });
-
-    }
-
+  bringPersonInfo = (docId) => {
+    var docRef = db.collection("users").doc(docId);
+    docRef.get().then(doc => {
+      if (doc.exists) {
+        console.log("Document data:", doc.data());
+          this.setState({conf:this.state.conf, hello : "Hi, " + doc.data().first + "!",})
+        } else {
+          console.log("Not on the system!");
+        }
+    }).catch(function(error) {
+      console.log("Error getting Data:", error);
+    });
+  }
 
   render() {
     /* this.autoprogo();  */
