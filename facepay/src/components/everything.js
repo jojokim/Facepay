@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
-import styles from './App.css';
+import styles from './everything.css';
 import $ from 'jquery';
 import Webcam from 'react-webcam';
 
