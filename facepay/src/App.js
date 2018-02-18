@@ -12,10 +12,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-<<<<<<< HEAD
-=======
       imgurl : "",
->>>>>>> 85a5b4750079dc8e704220429c90b1e323bb1372
     }
   }
 
