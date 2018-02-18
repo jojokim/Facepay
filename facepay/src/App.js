@@ -15,8 +15,27 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      imgurl : [logo1, logo0],
+      imgurl : logo1,
+      verified : false,
     }
+  }
+
+   componentDidMount () {
+     console.log("runs");
+    let timerId = setInterval(() => {
+      if (this.state.imgurl == logo0)
+        this.setState({imgurl:logo1});
+      else
+        this.setState({imgurl:logo0});
+    }, 3000);
+    let timerId3 = setTimeout(() => {
+      let timerId2 = setInterval(() => {
+        if (this.state.imgurl == logo0)
+          this.setState({imgurl:logo1});
+        else
+          this.setState({imgurl:logo0});
+      }, 3000);
+    }, 500);
   }
 
   render() {
@@ -27,14 +46,14 @@ class App extends Component {
             <div className="col-sm">
             </div>
             <div className="col-sm">
-              <img className="centered" src={this.state.imgurl[0]} alt="plink"/>
+              <img className="centered" src={this.state.imgurl} alt="plink"/>
             </div>
             <div className="col-sm">
             </div>
           </div>
         </div>
-        <Group/>
         <Face/>
+        <Group/>
         <Chart/>
       </div>
     );
