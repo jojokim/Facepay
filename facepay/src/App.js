@@ -23,9 +23,16 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <img className="plink" src={this.state.imgurl[0]} alt="plink"/>
+          <div className="row">
+            <div className="col-sm">
+            </div>
+            <div className="col-sm">
+              <img className="centered" src={this.state.imgurl[0]} alt="plink"/>
+            </div>
+            <div className="col-sm">
+            </div>
+          </div>
         </div>
-
         <Group/>
         <Face/>
         <Chart/>
