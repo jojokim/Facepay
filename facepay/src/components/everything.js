@@ -69,7 +69,6 @@ class App extends Component {
     }
 
     captureAndAdd = () => {
-      var downloadURL;
       let imageSrc = this.webcam.getScreenshot();
       imageSrc = imageSrc.substr(23);
       const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
@@ -94,11 +93,9 @@ class App extends Component {
       }, function() {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        downloadURL = uploadTask.snapshot.downloadURL;
-      });
-
-      this.setState({imgurl:downloadURL}).then(() => {
-        this.addPerson();
+        var downloadURL = uploadTask.snapshot.downloadURL;
+        this.addPerson(downloadURL);
+        console.log(downloadURL);
       });
     }
 
@@ -275,13 +272,22 @@ class App extends Component {
       });
     }
 
-    addPerson() {
+    addPerson(url) {
       let User = {
         first: this.state.first,
         last: this.state.last,
         img: this.state.imgurl,
         pid: " ",
       };
+      if (url != null) {
+        let User = {
+          first: this.state.first,
+          last: this.state.last,
+          img: url,
+          pid: " ",
+        };
+      }
+
       db.collection('users').add(User).then(function(docRef) {
           console.log('Added with docID : ' + docRef.id);
           // Request parameters.
