@@ -13,7 +13,6 @@ export default class Face extends Component {
   constructor () {
     super();
     this.state = {
-      pid : "",
     };
   }
 
@@ -80,6 +79,7 @@ export default class Face extends Component {
     }).then(data => {
       window.data = data;
       if (data.length > 1) {
+<<<<<<< HEAD
         // calculate the square size for each array, and the return the faceId of the largest rectangle 
         for (let i = 0; i < data.length; i++) {
            if (max_size < this.size_of_rectangle(data[i])) {
@@ -87,6 +87,10 @@ export default class Face extends Component {
             index = i;
            }
         }
+=======
+        // calculate the square size for each array, and the return the faceId of the largest rectangle //
+
+>>>>>>> 33d5da7aa48c0e9cd6af879bfd06e79b9156891c
       }
       if (data[0] == null)
         this.setState({hello:"Analyzing"});
@@ -118,8 +122,11 @@ export default class Face extends Component {
     }).then(data => {
       return data.json();
     }).then(result => {
-      if (result[0].candidates[0])
+      window.result = result;
+      if (result[0].candidates[0]) {
         this.getPersistedId(result[0].candidates[0].personId);
+        this.setState = {conf : result[0].candidates[0].confidence, hello: this.state.hello};
+      }
     }).catch(err => {
       console.log(err);
     });
@@ -152,7 +159,7 @@ export default class Face extends Component {
       docRef.get().then(doc => {
           if (doc.exists) {
               console.log("Document data:", doc.data());
-              this.setState({hello : "Hi, " + doc.data().first + "!",})
+              this.setState({conf:this.state.conf, hello : "Hi, " + doc.data().first + "!",})
           } else {
               console.log("Not on the system!");
           }
