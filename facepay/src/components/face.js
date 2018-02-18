@@ -79,18 +79,13 @@ export default class Face extends Component {
     }).then(data => {
       window.data = data;
       if (data.length > 1) {
-<<<<<<< HEAD
-        // calculate the square size for each array, and the return the faceId of the largest rectangle 
+        // calculate the square size for each array, and the return the faceId of the largest rectangle
         for (let i = 0; i < data.length; i++) {
            if (max_size < this.size_of_rectangle(data[i])) {
             max_size = this.size_of_rectangle(data[i]);
             index = i;
            }
         }
-=======
-        // calculate the square size for each array, and the return the faceId of the largest rectangle //
-
->>>>>>> 33d5da7aa48c0e9cd6af879bfd06e79b9156891c
       }
       if (data[0] == null)
         this.setState({hello:"Analyzing"});
