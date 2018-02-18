@@ -73,7 +73,7 @@ class App extends Component {
       imageSrc = imageSrc.substr(23);
       const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
       var storageRef = firebase.storage().ref();
-      
+
       var uploadTask = storageRef.child('fromapp'+Date.now+'.jpg').put(imgBlob);
       uploadTask.on('state_changed', function(snapshot){
         // Observe state change events such as progress, pause, and resume
@@ -377,7 +377,8 @@ class App extends Component {
             <input name="first" type="text" value={this.state.first} onChange={this.handleInputChange}/>
             <input name="last" type="text" value={this.state.last} onChange={this.handleInputChange}/>
             <input name="imgurl" type="text" value={this.state.imgurl} onChange={this.handleInputChange}/>
-            <button onClick={() => this.addPerson(this.state.first, this.state.last, this.state.imgurl)}>Add</button>
+            <button onClick={() => this.addPerson(this.state.first, this.state.last, this.state.imgurl)}>Add by Ink</button>
+            <button onClick={this.captureAndAdd}>Add by Photo</button>
             <button onClick={this.trainStatus}>Train Check</button>
             <button onClick={this.trainGroup}>Train Group</button>
           </div>
