@@ -9,7 +9,6 @@ import Webcam from 'react-webcam';
 import logo0 from '../imgs/plink2.png';
 import logo1 from '../imgs/plink3.png';
 
-var storage;
 let db;
 // Create a root reference
 var subscriptionKey = "cb2e4566d1ac4bdea478b4a3e9ec7256";
@@ -21,9 +20,9 @@ class App extends Component {
       name: '',
       hello: '',
       info: '',
-      first: 'First',
-      last: 'Last',
-      imgurl: 'imgURL',
+      first: '',
+      last: '',
+      imgurl: '',
       imgsrc: logo1,
     }
 
@@ -42,65 +41,29 @@ class App extends Component {
   }
 
     componentDidMount () {
-       console.log("runs");
-      let timerId = setInterval(() => {
+     console.log("runs");
+    let timerId = setInterval(() => {
+      if (this.state.imgsrc == logo0)
+        this.setState({imgsrc:logo1});
+      else
+        this.setState({imgsrc:logo0});
+    }, 3000);
+    let timerId3 = setTimeout(() => {
+      let timerId2 = setInterval(() => {
         if (this.state.imgsrc == logo0)
           this.setState({imgsrc:logo1});
         else
           this.setState({imgsrc:logo0});
       }, 3000);
-      let timerId3 = setTimeout(() => {
-        let timerId2 = setInterval(() => {
-          if (this.state.imgsrc == logo0)
-            this.setState({imgsrc:logo1});
-          else
-            this.setState({imgsrc:logo0});
-        }, 3000);
-      }, 500);
-    }
+    }, 500);
+  }
 
     componentWillMount() {
       db = firebase.firestore();
-      storage = firebase.storage();
     }
 
     setRef = (webcam) => {
       this.webcam = webcam;
-    }
-
-    captureAndAdd = () => {
-      let imageSrc = this.webcam.getScreenshot();
-      imageSrc = imageSrc.substr(23);
-      const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
-      var storageRef = firebase.storage().ref();
-      var mountainsRef = storageRef.child('fromapp'+Date.now+'.jpg');
-      ref.put(imgBlob).then(function(snapshot) {
-        console.log('Uploaded a blob or file!');
-      });
-
-      var uploadTask = storageRef.child('fromapp'+Date.now+'.jpg').put(imgBlob);
-      uploadTask.on('state_changed', function(snapshot){
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
-      }, function(error) {
-        // Handle unsuccessful uploads
-      }, function() {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        var downloadURL = uploadTask.snapshot.downloadURL;
-        this.setState({imgurl : downloadURL});
-        this.addPerson();
-      });
     }
 
     captureAndProcess = () => {
@@ -377,6 +340,9 @@ class App extends Component {
 
 
         <div>
+          <button onClick={this.createGroup}>Create Face List</button>
+          <button onClick={this.getGroup}>Get Group</button>
+
           <div className ="forms">
             <input name="first" type="text" value={this.state.first} onChange={this.handleInputChange}/>
             <input name="last" type="text" value={this.state.last} onChange={this.handleInputChange}/>
