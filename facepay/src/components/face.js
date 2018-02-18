@@ -13,7 +13,6 @@ export default class Face extends Component {
   constructor () {
     super();
     this.state = {
-      pid : "",
     };
   }
 
@@ -78,7 +77,7 @@ export default class Face extends Component {
       window.data = data;
       if (data.length > 1) {
         // calculate the square size for each array, and the return the faceId of the largest rectangle //
-      
+
       }
       if (data[0] == null)
         this.setState({hello:"Analyzing"});
@@ -110,8 +109,11 @@ export default class Face extends Component {
     }).then(data => {
       return data.json();
     }).then(result => {
-      if (result[0].candidates[0])
+      window.result = result;
+      if (result[0].candidates[0]) {
         this.getPersistedId(result[0].candidates[0].personId);
+        this.setState = {conf : result[0].candidates[0].confidence, hello: this.state.hello};
+      }
     }).catch(err => {
       console.log(err);
     });
@@ -144,7 +146,7 @@ export default class Face extends Component {
       docRef.get().then(doc => {
           if (doc.exists) {
               console.log("Document data:", doc.data());
-              this.setState({hello : "Hi, " + doc.data().first + "!",})
+              this.setState({conf:this.state.conf, hello : "Hi, " + doc.data().first + "!",})
           } else {
               console.log("Not on the system!");
           }
