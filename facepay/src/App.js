@@ -8,18 +8,24 @@ import Face from './components/face';
 import Chart from './components/chart';
 import Group from './components/group';
 
+import logo0 from './imgs/plink2.png';
+import logo1 from './imgs/plink3.png';
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      imgurl : "./imgs/",
+      imgurl : [logo1, logo0],
     }
   }
 
   render() {
     return (
       <div className="App">
-        <img src={this.state.imgurl} alt=""/>
+        <div className="container">
+          <img className="plink" src={this.state.imgurl[0]} alt="plink"/>
+        </div>
+
         <Group/>
         <Face/>
         <Chart/>
