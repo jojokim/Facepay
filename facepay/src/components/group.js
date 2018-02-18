@@ -10,10 +10,28 @@ export default class Group extends Component {
 
   constructor () {
     super();
+    this.state = {
+      first: "First",
+      last: "Last",
+      imgurl: "imgurl",
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.addPerson = this.addPerson.bind(this);
   }
 
   componentWillMount() {
     db = firebase.firestore();
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  handleChange(input, value) {
+    this.setState({
+        input: value
+    });
   }
 
   createGroup() {
@@ -58,11 +76,12 @@ export default class Group extends Component {
     });
   }
 
-  addPerson(firstIn, lastIn, imgUrl) {
+
+  addPerson = (firstIn, lastIn, urlIn) => {
     let User = {
-      first: "Joseph",
-      last: "Kim",
-      img: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAnSAAAAJDg3ZTU2ODIwLTQ1YmEtNGY3YS1iNDgyLWIyM2MxNTMwMjQ1ZA.jpg",
+      first: firstIn,
+      last: lastIn,
+      img: urlIn,
       pid: " ",
     };
     db.collection('users').add(User).then(function(docRef) {
@@ -149,10 +168,10 @@ export default class Group extends Component {
         <button onClick={this.createGroup}>Create Face List</button>
         <button onClick={this.getGroup}>Get Group</button>
         <div className ="forms">
-          <input className="formControl" type="text" placeholder="First Name"/>
-          <input className="formControl" type="text" placeholder="Last Name"/>
-          <input className="formControl" type="text" placeholder="Img Url"/>
-          <button onClick={this.addPerson}>Add</button>
+          <input type="text"  className="formControl" value={this.state.first} onChange={e => this.handleChange('first', e.target.value)}/>
+          <input type="text"  className="formControl" value={this.state.last} onChange={e => this.handleChange('last', e.target.value)}/>
+          <input type="text"  className="formControl" value={this.state.imgurl} onChange={e => this.handleChange('imgurl', e.target.value)}/>
+          <button onClick={() => this.addPerson(this.state.first, this.state.last, this.state.imgurl)}>Add</button>
           <button onClick={this.trainStatus}>Train Check</button>
           <button onClick={this.trainGroup}>Train Group</button>
         </div>

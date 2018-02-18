@@ -6,7 +6,7 @@ class DataChart extends React.Component {
     super(props);
     this.state = {
       options: {
-        title: 'Current value vs Average Value',
+        title: 'Athentification',
         hAxis: { title: 'Time', minValue: 0, maxValue: 5},
         vAxis: { title: 'Sum', minValue: 0, maxValue: 1 },
         legend: 'none',
@@ -41,13 +41,16 @@ class DataChart extends React.Component {
 
     };
   }
+
+
+
   render() {
     return (
       <div>
-        <div chartName="Chart1">
-          <Chart 
+        <div chartname="Chart1">
+          <Chart
             id='average'
-            chartType="LineChart" 
+            chartType="LineChart"
             rows={this.state.rows}
             columns={this.state.columns}
             width="100%"

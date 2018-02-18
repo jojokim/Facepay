@@ -5,7 +5,6 @@ import firestore from 'firebase/firestore';
 import styles from './App.css';
 
 import Face from './components/face';
-import Chart from './components/chart';
 import Group from './components/group';
 
 import logo0 from './imgs/plink2.png';
@@ -54,7 +53,6 @@ class App extends Component {
         </div>
         <Face/>
         <Group/>
-        <Chart/>
       </div>
     );
   }

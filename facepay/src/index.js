@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './components/everything';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {lightGreen500} from 'material-ui/styles/colors';

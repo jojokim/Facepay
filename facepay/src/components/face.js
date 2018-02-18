@@ -4,6 +4,10 @@ import Webcam from 'react-webcam';
 
 import * as firebase from 'firebase';
 import firestore from 'firebase/firestore';
+
+import Chart from './chart';
+
+
 let db;
 // Create a root reference
 var subscriptionKey = "cb2e4566d1ac4bdea478b4a3e9ec7256";
@@ -13,7 +17,7 @@ export default class Face extends Component {
   constructor () {
     super();
     this.state = {
-      pid : "",
+      confidence : 0,
     };
   }
 
@@ -88,8 +92,8 @@ export default class Face extends Component {
            }
         }
       }
-      if (data[0] == null)
-        this.setState({hello:"Analyzing"});
+      if (data[0] == null);
+        //this.setState({hello:"Analyzing"});
       else {
         this.identify(data[index].faceId);
       }
@@ -120,7 +124,8 @@ export default class Face extends Component {
     }).then(result => {
       if (result[0].candidates[0])
         this.getPersistedId(result[0].candidates[0].personId);
-        window.res = result;
+
+        this.setState = result[0].candicates[0].confidence;
     }).catch(err => {
       console.log(err);
     });
@@ -159,27 +164,18 @@ export default class Face extends Component {
       }).catch(function(error) {
           console.log("Error getting Data:", error);
       });
-
     }
-
 
   render() {
-    /* this.autoprogo();  */
-    const styles = {
-      font: {
-        textAlign: 'center',
-        color: 'white',
-        marginTop: '100px',
-        marginBottom: '40px'
-      }
-    }
 
     return (
       <div>
         <div>
-        <h1>{this.state.name}</h1>
-        <h1>{this.state.hello}</h1>
-        <h2>{this.state.info}</h2>
+          <h1>{this.state.name}</h1>
+          <h1>{this.state.hello}</h1>
+          <h2>{this.state.info}</h2>
+
+          <Chart conf={this.state.confidence}/>
           <Webcam
             audio={false}
             height={500}
@@ -189,14 +185,6 @@ export default class Face extends Component {
           />
           <br/>
           <button onClick={this.captureAndProcess}>Magic Button</button>
-        </div>
-        <br/><br/>
-        <div id="wrapper" style={this.outputStyle}>
-            <div id="jsonOutput" style={this.imageStyle}>
-                Response:
-                <br/><br/>
-                <textarea id="responseTextArea" className="UIInput" style={{width:'580px', height:'400px'}}></textarea>
-            </div>
         </div>
 
       </div>
