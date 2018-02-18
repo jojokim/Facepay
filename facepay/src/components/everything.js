@@ -25,9 +25,22 @@ class App extends Component {
       imgurl: '',
       imgsrc: logo1,
     }
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.addPerson = this.addPerson.bind(this);
   }
 
-   componentDidMount () {
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+    componentDidMount () {
      console.log("runs");
     let timerId = setInterval(() => {
       if (this.state.imgsrc == logo0)
@@ -184,16 +197,6 @@ class App extends Component {
       db = firebase.firestore();
     }
 
-    handleSubmit(event) {
-      event.preventDefault();
-    }
-
-    handleChange(input, value) {
-      this.setState({
-          input: value
-      });
-    }
-
     createGroup() {
       // Request parameters.
       var params = {
@@ -236,11 +239,11 @@ class App extends Component {
       });
     }
 
-    addPerson = (firstIn, lastIn, urlIn) => {
+    addPerson() {
       let User = {
-        first: firstIn,
-        last: lastIn,
-        img: urlIn,
+        first: this.state.first,
+        last: this.state.last,
+        img: this.state.imgurl,
         pid: " ",
       };
       db.collection('users').add(User).then(function(docRef) {
@@ -326,24 +329,25 @@ class App extends Component {
               <h1>{this.state.name}</h1>
               <h1>{this.state.hello}</h1>
               <h2>{this.state.info}</h2>
-              <img className="centered" src={this.state.imgsrc} alt="plink"/>
+              {
+                (this.state.name == '') ? <img className="centered" src={this.state.imgsrc} alt="plink" onClick={this.captureAndProcess}/> : ''
+              }
+
             </div>
             <div className="col-sm">
             </div>
           </div>
         </div>
-        <div>
-          <br/>
-          <button onClick={this.captureAndProcess}>Magic Button</button>
-        </div>
+
 
         <div>
           <button onClick={this.createGroup}>Create Face List</button>
           <button onClick={this.getGroup}>Get Group</button>
+
           <div className ="forms">
-            <input type="text"  className="formControl" value={this.state.first} onChange={e => this.handleChange('first', e.target.value)}/>
-            <input type="text"  className="formControl" value={this.state.last} onChange={e => this.handleChange('last', e.target.value)}/>
-            <input type="text"  className="formControl" value={this.state.imgurl} onChange={e => this.handleChange('imgurl', e.target.value)}/>
+            <input name="first" type="text" value={this.state.first} onChange={this.handleInputChange}/>
+            <input name="last" type="text" value={this.state.last} onChange={this.handleInputChange}/>
+            <input name="imgurl" type="text" value={this.state.imgurl} onChange={this.handleInputChange}/>
             <button onClick={() => this.addPerson(this.state.first, this.state.last, this.state.imgurl)}>Add</button>
             <button onClick={this.trainStatus}>Train Check</button>
             <button onClick={this.trainGroup}>Train Group</button>

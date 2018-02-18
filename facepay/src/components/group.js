@@ -168,9 +168,9 @@ export default class Group extends Component {
         <button onClick={this.createGroup}>Create Face List</button>
         <button onClick={this.getGroup}>Get Group</button>
         <div className ="forms">
-          <input type="text"  className="formControl" value={this.state.first} onChange={e => this.handleChange('first', e.target.value)}/>
-          <input type="text"  className="formControl" value={this.state.last} onChange={e => this.handleChange('last', e.target.value)}/>
-          <input type="text"  className="formControl" value={this.state.imgurl} onChange={e => this.handleChange('imgurl', e.target.value)}/>
+          <input type="text" className="formControl" value={this.state.first} onChange={e => this.handleChange('first', e.target.value)}/>
+          <input type="text" className="formControl" value={this.state.last} onChange={e => this.handleChange('last', e.target.value)}/>
+          <input type="text" className="formControl" value={this.state.imgurl} onChange={e => this.handleChange('imgurl', e.target.value)}/>
           <button onClick={() => this.addPerson(this.state.first, this.state.last, this.state.imgurl)}>Add</button>
           <button onClick={this.trainStatus}>Train Check</button>
           <button onClick={this.trainGroup}>Train Group</button>
