@@ -14,5 +14,11 @@
 
 h1 {
   text-align: center;
-  text-decoration-color: white;
+  color: white;
+  font-size: 80px;
+}
+h2 {
+  text-align: center;
+  color: white;
+  font-size: 60px;
 }
