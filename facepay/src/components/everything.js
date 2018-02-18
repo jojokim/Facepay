@@ -68,6 +68,16 @@ class App extends Component {
       this.webcam = webcam;
     }
 
+      makeid() {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 5; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+      }
+
     captureAndAdd = () => {
       var downloadURL;
       let imageSrc = this.webcam.getScreenshot();
@@ -75,7 +85,7 @@ class App extends Component {
       const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
       var storageRef = firebase.storage().ref();
 
-      var uploadTask = storageRef.child('fromapp'+Date.now+'.jpg').put(imgBlob);
+      var uploadTask = storageRef.child(this.makeid()+'.jpg').put(imgBlob);
       uploadTask.on('state_changed', function(snapshot){
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -95,10 +105,11 @@ class App extends Component {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         downloadURL = uploadTask.snapshot.downloadURL;
-        this.setState({imgurl:downloadURL});
+        console.log(downloadURL);
       });
 
-      this.addPerson();
+
+      this.addPerson(downloadURL);
     }
 
     captureAndProcess = () => {
@@ -274,13 +285,22 @@ class App extends Component {
       });
     }
 
-    addPerson() {
+    addPerson(url) {
       let User = {
         first: this.state.first,
         last: this.state.last,
         img: this.state.imgurl,
         pid: " ",
       };
+      if (url != null) {
+        let User = {
+          first: this.state.first,
+          last: this.state.last,
+          img: url,
+          pid: " ",
+        };
+      }
+
       db.collection('users').add(User).then(function(docRef) {
           console.log('Added with docID : ' + docRef.id);
           // Request parameters.
