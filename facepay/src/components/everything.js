@@ -73,11 +73,7 @@ class App extends Component {
       imageSrc = imageSrc.substr(23);
       const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
       var storageRef = firebase.storage().ref();
-      var mountainsRef = storageRef.child('fromapp'+Date.now+'.jpg');
-      ref.put(imgBlob).then(function(snapshot) {
-        console.log('Uploaded a blob or file!');
-      });
-
+      
       var uploadTask = storageRef.child('fromapp'+Date.now+'.jpg').put(imgBlob);
       uploadTask.on('state_changed', function(snapshot){
         // Observe state change events such as progress, pause, and resume
