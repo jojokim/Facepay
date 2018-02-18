@@ -120,6 +120,7 @@ export default class Face extends Component {
     }).then(result => {
       if (result[0].candidates[0])
         this.getPersistedId(result[0].candidates[0].personId);
+        window.res = result;
     }).catch(err => {
       console.log(err);
     });
@@ -140,7 +141,6 @@ export default class Face extends Component {
           return data.json();
       }).then(res=> {
         var persistedId = res.persistedFaceIds[0];
-        window.res = res;
         this.bringPersonInfo(res.userData);
       }).catch(function(err) {
           console.log(err);
