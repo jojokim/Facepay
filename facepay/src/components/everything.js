@@ -69,6 +69,7 @@ class App extends Component {
     }
 
     captureAndAdd = () => {
+      var downloadURL;
       let imageSrc = this.webcam.getScreenshot();
       imageSrc = imageSrc.substr(23);
       const imgBlob = this.b64toBlob(imageSrc, "image/jpeg");
@@ -93,12 +94,12 @@ class App extends Component {
       }, function() {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        var downloadURL = uploadTask.snapshot.downloadURL;
-        this.setState({
-          imgurl: downloadURL
-        });
-        this.addPerson();
+        downloadURL = uploadTask.snapshot.downloadURL;
       });
+
+      this.setState({imgurl:downloadURL});
+
+      this.addPerson();
     }
 
     captureAndProcess = () => {
