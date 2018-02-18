@@ -95,7 +95,7 @@ class App extends Component {
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         var downloadURL = uploadTask.snapshot.downloadURL;
         this.setState({
-          [imgurl]: downloadURL
+          imgurl: downloadURL
         });
         this.addPerson();
       });
