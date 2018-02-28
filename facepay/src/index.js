@@ -11,12 +11,7 @@ import firestore from 'firebase/firestore'
 import registerServiceWorker from './registerServiceWorker';
 
 var config = {
-   apiKey: 'AIzaSyDXC_ba_hzVZrlZg1ly3nzgL9hlGNJlaxc',
-   authDomain: 'airy-charmer-164016.firebaseapp.com',
-   databaseURL: 'https://airy-charmer-164016.firebaseio.com',
-   projectId: 'airy-charmer-164016',
-   storageBucket: 'airy-charmer-164016.appspot.com',
-   messagingSenderId: '359173267747',
+   // fetch from firebase //
 };
 
 firebase.initializeApp(config);
